@@ -1,6 +1,7 @@
 package com.teamtreehouse.contactmgr;
 
 import com.teamtreehouse.contactmgr.model.Contact;
+import com.teamtreehouse.contactmgr.model.Contact.ContactBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -46,7 +47,14 @@ import org.hibernate.service.ServiceRegistry;
  *7. You cannot directly pass in MetadataSources to the field sessionFactory because we
  *   need to build the registry first!
  *
- * */
+ *Entry 9: Builder Design Pattern:
+ * 1. Modify the import list: import com.teamtreehouse.contactmgr.model.Contact
+ *    add .ContactBuilder to eanble ContactBuilder object instantiation
+ *    Oh BTW it seems we still need the
+ *    import com.teamtreehouse.contactmgr.model.Contact after all please keep one
+ *    while creating the other for ContactBuilder.
+ * 2. This build() method pattern is similar in the Step 5-4. Meaning the step inside
+ *    the inner class is also happening in the ServiceRegistry class */
 
 public class Application {
     //step 5-2:NOTE: at first buildSessionFactory is not present:
@@ -71,13 +79,20 @@ public class Application {
      *    any argument inputs, and if we input it the Long number will create error
      * 2. This is will be bothersome if the argument is in a large number. Thus
      *    it will be best to make builder design that will able to make arguments
-     *    inputted in different lines of the instantiation code*/
+     *    inputted in different lines of the instantiation code
+     * 3. Now we want to make a builder design pattern so we will create first the
+     *    builder instantiation code for Contact object
+     *    NOTE: at first ContactBuilder will be highlighted red since this method is
+     *          still unavailable in real life
+     *          to solve this we need to go to --> Contact.java to Entry 7*/
 
     //step 3-3
     public static void main(String[] args) {
 
-
-        //6-1: create contact object normally:
-        Contact contact = new Contact();
+        //6-3: instantiating Contact Object using Builder pattern:
+        Contact contact = new ContactBuilder("Moo", "Mee")
+                .withEmail("moo@something.com")
+                .withPhone(888776543L)
+                .build();
     }
 }

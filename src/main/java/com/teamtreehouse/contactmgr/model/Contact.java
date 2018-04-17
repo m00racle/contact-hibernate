@@ -2,14 +2,17 @@ package com.teamtreehouse.contactmgr.model;
 
 import javax.persistence.*;
 
-/**Step 4: Creating model of Contact
+/**Entry 4: Creating model of Contact
  * 1. Since this is a model we need to group it into new package called model
  * 2. prepare for some annotations usage here and some confusing notes
  * 3. Since Java Persistence API (JPA) will call the constructor when instantiate
  * Contact object we need to ensure one is present. Well actually since no
  * constructor available inside a class and superclass then Java compiled will
  * choose default constructor for us. But here we want to show how a default
- * constructor looks like*/
+ * constructor looks like
+ *
+ * ---> after this Entry 5 will be in Application.java: Building Design
+ * Pattern*/
 
 //-> map this Contact object to a single row in the table of database
 @Entity

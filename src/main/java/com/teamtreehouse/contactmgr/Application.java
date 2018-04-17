@@ -1,5 +1,6 @@
 package com.teamtreehouse.contactmgr;
 
+import com.teamtreehouse.contactmgr.model.Contact;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -59,8 +60,24 @@ public class Application {
         //step 5-5: building metadata based on hibernate.cfg.xml:
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
+
+    /**Entry 6: Builder Design Pattern
+     * Here we will use a build() method as shortcut to instantiate object
+     * in this case contact
+     * 1. First we will show you how we normally create a contact object
+     *    NOTE: we ommit the id argument as it was already set as auto increment
+     *    in the setting in Contact.java class
+     *    Since the constructor in Contact.java is still default it is not require
+     *    any argument inputs, and if we input it the Long number will create error
+     * 2. This is will be bothersome if the argument is in a large number. Thus
+     *    it will be best to make builder design that will able to make arguments
+     *    inputted in different lines of the instantiation code*/
+
     //step 3-3
     public static void main(String[] args) {
 
+
+        //6-1: create contact object normally:
+        Contact contact = new Contact();
     }
 }

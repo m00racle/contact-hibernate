@@ -33,7 +33,19 @@ import org.hibernate.service.ServiceRegistry;
  * 5. Building Hibernate SessionFactory(3:10): This is a build design pattern which
  *    we make metadata (data that provides info about other data) on the buildSession
  *    Factory. The build design pattern will be explained next entry 6 in
- *    BuilderDesign Pattern*/
+ *    BuilderDesign Pattern
+ * NOTE: If you confused why does this metadata builder can build specifically a
+ * Sessionfactory: IT IS BECAUSE IT'S BY DEFAULT REFERENCING hibernate.cfg,xml (in
+ * configure()) AND CREATING METADATA FROM IT
+ *6. The buildSessionFactory() in the return MetadataSources(registry) is not related to
+ *   method name buildSessionFactory since it was a method name in the MetadataSources
+ *   class after reading registry collected from hibernate.cfg.xml and recognized it want
+ *   to buildSessionFactory. I knew this for a fact since the method name has a typo
+ *   which proven it was not related to MetadataSources.
+ *7. You cannot directly pass in MetadataSources to the field sessionFactory because we
+ *   need to build the registry first!
+ *
+ * */
 
 public class Application {
     //step 5-2:NOTE: at first buildSessionFactory is not present:
@@ -41,10 +53,10 @@ public class Application {
 
     //Step 5-3: building the buildSessionFactory method:
     private static SessionFactory builSessionFactory(){
-        //step 5-4:
+        //step 5-4: configure() by default refer to hibernate.cfg.xml:
         final ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure().build();
-        //step 5-5:
+        //step 5-5: building metadata based on hibernate.cfg.xml:
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
     //step 3-3

@@ -1,0 +1,21 @@
+
+<!--Entry 2: Database configuration
+ in this file we will create configuration for all database communication:
+  1. connection setting which config the driver and url to connect
+  2. SQL dialect which confict the language to control the database (SQL)
+  and set the dialect to H2 dialect so the Hibernate knows what language
+  to use to manage the database
+  3. Almost forget to add hibernate-configuration tags and session-factory tags
+  encapsulating all other properties!!-->
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings-->
+        <property name="connection.driver.class">org.h2.Driver</property>
+        <!-- ./data/contactmgr is addrees for our database file local-->
+        <property name="connection.url">jdbc:h2:./data/contactmgr</property>
+
+        <!-- SQL dialect config-->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+    </session-factory>
+</hibernate-configuration>

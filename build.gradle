@@ -1,0 +1,32 @@
+group 'com.teamtreehouse'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+/** entry 1:
+ * 1- This Gradle will be use to include dependencies related using Hibernate
+ * and H2 database. We will try to build from scratch to learn to mimic the
+ * original coding.
+ * 2- We need to head for mavenCentral to fetch hibernate-core and h2 database
+ * we select the latest stable release with highest usage possible
+ * After that we save all and refresh the gradle tool
+ * 3- We need to set special directory for the data into database let's just
+ * create new directory from the root project call data
+ *
+ * -->After  this we build configuration file somewhere in the class path, thus
+ * we need to set src/main directory: hibernate.cfg.xml
+ * */
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //1-2: https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.12.Final'
+
+    //1-2: https://mvnrepository.com/artifact/com.h2database/h2
+    compile group: 'com.h2database', name: 'h2', version: '1.4.196'
+
+}

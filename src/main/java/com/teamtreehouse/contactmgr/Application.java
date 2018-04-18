@@ -76,7 +76,7 @@ public class Application {
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
-    //ENTRY 6; ENTRY 16
+    //ENTRY 6; ENTRY 16; ENTRY 18
     /**Entry 6: Builder Design Pattern
      * Here we will use a build() method as shortcut to instantiate object
      * in this case contact
@@ -99,7 +99,22 @@ public class Application {
      *      the private methods FetchAllContacts after we run save method
      *  2.  We call save method to save our entry as specified in the ContactBuilder
      *  3.  We print the Query or in this case we use stream to substitute for loop and println
-     *  NEXT: ENTRY 17: Updating adn Deleting Data GOTO: below the fetchAllContacts()*/
+     *  NEXT: ENTRY 17: Updating adn Deleting Data GOTO: below the fetchAllContacts()
+     *
+     *  ENTRY 18: Updating and Deleting Data
+     *  1.  The last thing we do is presenting our changes or in this case create,
+     *      update and delete.
+     *  2.  First in the name of consistency let's put some printf before fetching all
+     *      data as starting point at initial database table schema.
+     *  3.  then we pick the last contact that the id was picked when saving it
+     *      NOTE: we revise the findContactById(id) method as static thus we don't have
+     *          to instantiate it from a static method main();
+     *  4.  that Contact type object then updated by changing the firstname using
+     *      setter method for name.
+     *  5.  We stream it and print some information about the update
+     *  6.  Using the same logic we use the delete method to delete the latest update
+     *      and put some notes about it.
+     * */
 
     //step 3-3
     public static void main(String[] args) {
@@ -113,7 +128,28 @@ public class Application {
         //16-2: save the built contact object:
         int id = save(contact);
 
+        //18-2: put some note about saving it initially
+        System.out.printf("%nInitial condition, before the update..");
+
         //16-3: stream the query fetched the POJO:
+        fetchAllContacts().stream().forEach(System.out::println);
+
+        //18-3: selecting contact by id
+        Contact updatedContact = findContactById(id);
+
+        //18-4: updating the last data
+        System.out.printf("%n%n updating the last data.....%n");
+        updatedContact.setFirstName("John");
+        update(updatedContact);
+
+        //18-5: we stream the latest update
+        System.out.printf("%n update finished, here is the results:%n");
+        fetchAllContacts().stream().forEach(System.out::println);
+
+        //18-6: now for deletion for the latest data
+        System.out.printf("%n%n now we delete the latest update....%n");
+        delete(updatedContact);
+        System.out.printf("%n here is the latest database after deletion...%n");
         fetchAllContacts().stream().forEach(System.out::println);
     }
 
@@ -220,5 +256,59 @@ public class Application {
         //15-8: close the session and return the List:
         session.close();
         return contacts;
+    }
+
+    //Entry 17
+    /** Entry 17: Updating and Deleting Data
+     * 1.   if we want to update and delete data we need to be selective on pointing
+     *      which data we want to alter. Thus we need to code a method to select
+     *      a data (in this case POJO Contact) bu their id in this case and the
+     *      method will return POJO Contact
+     *  2.  inside the method we will use the database to sort and find the intended
+     *      data thus we need to ask then to open a session to communicate with us
+     *  3.  Then we will fetch selected Contact POJO by selecting by id
+     *      NOTE: this means search for Contact POJO using id (which is a column name
+     *          in the schema, if not found return null
+     *  4.  after the transaction done close the session and then return the Contact
+     *      POJO
+     *  5.  The we are ready to make methods to UPDATE and DELETE data from database.
+     *      these methods will follow the same pattern as save method in Entry 11 above.
+     *      starting with open session, begin transaction. do stuffs, commit and close
+     *  6.  We begin with UPDATE method which return void and pass Contact argument
+     *  7.  Finally the DELETE method is basically the same but for delete
+     *  NEXT: ENTRY 18: Updating and Deleting Data GOTO: Application.java main method.
+     * */
+
+    //17-1: creating method to findContactById :
+    private static Contact findContactById(int id){
+        //17-2: opening a session to database:
+        Session session = sessionFactory.openSession();
+
+        //17-3: fetch selected data
+        Contact contact = session.get(Contact.class, id);
+
+        //17-4: Session close and return Contact
+        session.close();
+        return contact;
+    }
+
+    //17-6: creating update method:
+    private static void update(Contact contact){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        //17-5: for update
+        session.update(contact);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    //17-7: delete method:
+    private static void delete(Contact contact){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(contact);
+        session.getTransaction().commit();
+        session.close();
     }
 }

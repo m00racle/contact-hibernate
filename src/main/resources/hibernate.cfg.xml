@@ -27,6 +27,12 @@
         inside the database table schema. To show we need to move to the NEXT ENTRY
         inside the database table schema. To show we need to move to the NEXT ENTRY
     NEXT ENTRY 13: we go back to Application.java class for Fetching Data with Hibernate
+
+    ENTRY 14: Fetching data with Hibernate (7:15)
+    1.  we need to modify the hbm2ddl.auto from create to update to change its behavior
+        from dropping previous table each time the program runs to only updating it.
+    NEXT: ENTRY 15: Fetching data with Hibernate GOTO: Application.java below
+        save(Contact) method
     -->
 
 <hibernate-configuration>
@@ -39,8 +45,8 @@
         <!-- SQL dialect config-->
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
-        <!-- 12-1: creating database schema-->
-        <property name="hbm2ddl.auto">create</property>
+        <!-- 12-1: creating database schema; 14-1: change hbm2ddl.auto to update:-->
+        <property name="hbm2ddl.auto">update</property>
 
         <!-- 12-2: show the sql queries-->
         <property name="show_sql">true</property>

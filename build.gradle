@@ -4,6 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
+//ENTRY 1; ENTRY 10
 /** entry 1:
  * 1- This Gradle will be use to include dependencies related using Hibernate
  * and H2 database. We will try to build from scratch to learn to mimic the
@@ -16,6 +17,14 @@ sourceCompatibility = 1.8
  *
  * -->After  this we build configuration file somewhere in the class path, thus
  * we need to set src/main directory: hibernate.cfg.xml
+ *
+ * ENTRY 10: Saving Data with Hibernate<--ENTRY 9 in Application.java
+ * in this session we will save a Contact POJO to the database
+ * 1. We will add another library called JTA (Java Transaction API) library
+ *    NOTE: more about transaction read the Study notes.
+ *    NOTE: as always don't forget to update the gradle after adding new dependencies
+ * NEXT: ENTRY 11: Saving Data with Hibernate --> GOTO: Application,java save(Contact)
+ *       method
  * */
 
 repositories {
@@ -29,4 +38,6 @@ dependencies {
     //1-2: https://mvnrepository.com/artifact/com.h2database/h2
     compile group: 'com.h2database', name: 'h2', version: '1.4.196'
 
+    // 10-1: https://mvnrepository.com/artifact/javax.transaction/jta
+    compile group: 'javax.transaction', name: 'jta', version: '1.1'
 }

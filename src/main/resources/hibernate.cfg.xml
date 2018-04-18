@@ -1,4 +1,5 @@
 
+<!--ENTRY2; ENTRY 12 -->
 <!--Entry 2: Database configuration
  in this file we will create configuration for all database communication:
   1. connection setting which config the driver and url to connect
@@ -6,7 +7,27 @@
   and set the dialect to H2 dialect so the Hibernate knows what language
   to use to manage the database
   3. Almost forget to add hibernate-configuration tags and session-factory tags
-  encapsulating all other properties!!-->
+  encapsulating all other properties!!
+
+  ENTRY 12: Saving Data with Hibernate
+    1.  In order to enable hibernate to save data we need to make Hibernate mapping to data
+        definition language (hbm2ddl) to prepare database table schema. this is inside a
+        property tag named hbm2ddl.auto, which if the value inside tag is create it will
+        create NEW schema and delete the olde ones every run. If you want to add only then
+        use update. In this entry just to save a data demo purpose we use create first. Later
+        we will change it!
+    2.  Next we need to make hibernate able to show the queries executed. The code for this
+        is pretty strightforward and still using property tags but named it show_sql. As
+        it is a Boolean means you need to set the tag value as true
+    3.  Lastly, we need to determine which POJO package we want to use to create the schema
+        and data entry. Please write the full package name just like if we want to import
+        the package plus the name of the class into mapping single tag and class designation
+    NOTE: we can run it immediately after finishing ENTRY 12 but it will not show anything
+        but a statement a database schema has been built with all fields in POJO as columns
+        inside the database table schema. To show we need to move to the NEXT ENTRY
+        inside the database table schema. To show we need to move to the NEXT ENTRY
+    NEXT ENTRY 13: we go back to Application.java class for Fetching Data with Hibernate
+    -->
 
 <hibernate-configuration>
     <session-factory>
@@ -17,5 +38,14 @@
 
         <!-- SQL dialect config-->
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- 12-1: creating database schema-->
+        <property name="hbm2ddl.auto">create</property>
+
+        <!-- 12-2: show the sql queries-->
+        <property name="show_sql">true</property>
+
+        <!-- 12-3: mapping the POJO class-->
+        <mapping class="com.teamtreehouse.contactmgr.model.Contact"/>
     </session-factory>
 </hibernate-configuration>

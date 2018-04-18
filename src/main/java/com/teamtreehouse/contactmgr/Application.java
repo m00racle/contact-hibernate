@@ -2,11 +2,13 @@ package com.teamtreehouse.contactmgr;
 
 import com.teamtreehouse.contactmgr.model.Contact;
 import com.teamtreehouse.contactmgr.model.Contact.ContactBuilder;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
+//ENTRY 3; ENTRY 5; ENTRY 9
 /**Entry 3: Making main method on the Application.java
  * 1. Just make new package: com.teamtreehouse.contactmger
  * 2. make ne Java class named it Application
@@ -54,7 +56,8 @@ import org.hibernate.service.ServiceRegistry;
  *    import com.teamtreehouse.contactmgr.model.Contact after all please keep one
  *    while creating the other for ContactBuilder.
  * 2. This build() method pattern is similar in the Step 5-4. Meaning the step inside
- *    the inner class is also happening in the ServiceRegistry class */
+ *    the inner class is also happening in the ServiceRegistry class
+ * NEXT: ENTRY 10: Saving Data with Hibernate GOTO ---> build.gradle dependency{}*/
 
 public class Application {
     //step 5-2:NOTE: at first buildSessionFactory is not present:
@@ -69,6 +72,7 @@ public class Application {
         return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
+    //ENTRY 6
     /**Entry 6: Builder Design Pattern
      * Here we will use a build() method as shortcut to instantiate object
      * in this case contact
@@ -94,5 +98,37 @@ public class Application {
                 .withEmail("moo@something.com")
                 .withPhone(888776543L)
                 .build();
+    }
+
+    //ENTRY 11
+    /** ENTRY 11: Saving Data with Hibernate
+     * 1.   Now we will start enabling saving data with coding a method save(Contact)
+     * 2.   It is static because this entity will be created in the initialized
+     *      Application.java Class and does not wait to be initialized by new
+     * 3.   We start by opening a session which we simply instantiate Session object and
+     *      then called the sessionFactory object created earlier to open a session
+     *      NOTE: we use Session object class from Hibernate package NOT H2 package!
+     * 4.   We need to stated that we will begin the transaction using the session object
+     *      we just instantiated earlier
+     * 5.   The main activity here, we will save the contact POJO. We use session object
+     *      method save(Contact) and pass in the POJO as argument
+     * 6.   Next we need to commit the transaction as we see no problem here. Please NOTE:
+     *      the transaction is already begun so we just need to get the active transaction
+     *      to perform the commit method()
+     * 7.   After all of the process commited we need to close the session
+     * NEXT: ENTRY 12 ---> GOTO hibernate.cfg.xml bottom inned part of hibernate tags*/
+
+    //11-1: coding save(Contact) method:
+    public static void save(Contact contact){
+        //11-3: Opening a session
+        Session session = sessionFactory.openSession();
+        //11-4: Begin the transaction:
+        session.beginTransaction();
+        //11-5: save the POJO:
+        session.save(contact);
+        //11-6: commit the transaction
+        session.getTransaction().commit();
+        //11-7: close the session
+        session.close();
     }
 }

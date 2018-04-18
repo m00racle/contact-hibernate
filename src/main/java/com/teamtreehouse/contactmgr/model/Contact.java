@@ -2,6 +2,7 @@ package com.teamtreehouse.contactmgr.model;
 
 import javax.persistence.*;
 
+//ENTRY 4
 /**Entry 4: Creating model of Contact
  * 1. Since this is a model we need to group it into new package called model
  * 2. prepare for some annotations usage here and some confusing notes
@@ -39,6 +40,7 @@ public class Contact {
     //Default constructor for JPA:
     public Contact(){}
 
+    //ENTRY 7
     /** Entry 7: Builder Design Pattern
      * We continue our step by buiding the ConatctBuilder method to be used in
      * instantiating Contact Object inside Application.java
@@ -59,6 +61,7 @@ public class Contact {
         this.phone = builder.phone;
     }
 
+    //ENTRY 8
     /**ENTRY 8: Builder Design Pattern:
      *  here we will declare a class inside a class. Specifically public static class
      *  ConatctBuilder inside Contact.java class:
@@ -77,7 +80,7 @@ public class Contact {
      *       what ContactBuilder object is through ContactBuilder inner class
      * 5. Lastly, we must define and return a new Contact object we build using
      *    build method to return this
-     * NEXT GOTO --> Application.java to import some stuff to enable Contact*/
+     * NEXT ENTRY 9 GOTO --> Application.java to import some stuff to enable Contact*/
 
     //8-1: Declaring class
     public static class ContactBuilder{
